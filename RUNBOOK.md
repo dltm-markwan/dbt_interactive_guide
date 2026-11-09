@@ -28,6 +28,12 @@ cp "/path/to/their/Sample SQL.sql" ~/code/work/dbt/training/<slug>/source/
 
 Nothing else. No `lesson.yml`, no repo — the skill writes those.
 
+**One invocation, all three stages.** `/skill:dbt-lesson-prep` with no mode runs `build` → `plan` → `guide`
+and stops after each to show you the counts and anything parked, so you can stop a stage going wrong before
+the next one builds on it. The named modes re-run a single stage later.
+
+Nothing else. No `lesson.yml`, no repo — the skill writes those.
+
 ## 2. Process their SQL and build the dbt repo
 
 ```bash
@@ -85,12 +91,27 @@ GUIDE_CUSTOMER=<slug> npm run dev
 #   → http://localhost:5173/
 ```
 
-A static build, for handing over or presenting offline:
+A static build, for presenting offline:
 
 ```bash
-GUIDE_CUSTOMER=<slug> GUIDE_BASE=./ npm run build     # relative paths, works from file:// or a zip
+GUIDE_CUSTOMER=<slug> GUIDE_BASE=./ npm run build
 open dist/index.html
 ```
+
+**One file, to send them:**
+
+```bash
+GUIDE_CUSTOMER=<slug> GUIDE_SINGLE=1 GUIDE_BASE=./ npm run build
+#   → dist/index.html, ~2 MB, everything inlined: JS, CSS and every image as a data URI
+```
+
+That single file opens from disk with no server and no network, so it can be emailed or dropped in a shared
+folder. It is a build product, not a source of truth — regenerate it rather than editing it, and do not keep
+it in git (it is 2 MB of inlined JavaScript and will churn on every change).
+
+Two limits worth knowing: it cannot be cached the way a normal bundle can, and being one file means the
+`icons.svg` and `favicon.svg` in `public/` are dropped — nothing references them, so today that is free, but
+check if that ever changes.
 
 `GUIDE_CUSTOMER` unset builds the original, unbranded guide — handy for comparing.
 
