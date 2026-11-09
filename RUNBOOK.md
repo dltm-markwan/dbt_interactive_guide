@@ -32,8 +32,6 @@ Nothing else. No `lesson.yml`, no repo — the skill writes those.
 and stops after each to show you the counts and anything parked, so you can stop a stage going wrong before
 the next one builds on it. The named modes re-run a single stage later.
 
-Nothing else. No `lesson.yml`, no repo — the skill writes those.
-
 ## 2. Process their SQL and build the dbt repo
 
 ```bash
