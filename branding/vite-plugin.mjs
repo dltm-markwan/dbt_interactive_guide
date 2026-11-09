@@ -15,8 +15,10 @@ export default function brandPlugin() {
   return {
     name: 'dbt-guide-brand',
 
-    config() {
+    config(_cfg, env) {
       if (!customer) return {}
+      // dev server: serve at the root so the URL is just localhost:5173
+      if (env && env.command === 'serve') return { base: '/' }
       return { base: process.env.GUIDE_BASE || `/${customer}/` }
     },
 
