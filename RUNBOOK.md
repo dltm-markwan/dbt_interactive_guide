@@ -129,6 +129,20 @@ grep -oc 'border' "$JS"                              # same count as the unbrand
 
 That last one is the canary: if the class count moved, the mask broke and the page will render unstyled.
 
+## 5b. Check the lot before you deliver
+
+```bash
+cd ~/code/work/dbt/training/<slug>
+python3 ~/.agents/skills/dbt-lesson-prep/scripts/gate.py --customer .
+```
+
+One command, one verdict. It audits the repo at all eight tags, lints the walkthrough, checks the plan for
+unfilled placeholders and leftover session 5/6 text, and checks the guide bundle for jaffle names and
+external references. `OK` is the sign-off; `INCOMPLETE` means something was never produced.
+
+It cannot judge whether a structural change to the plan was the *right* one — for that, read the
+`paragraph count` delta it prints and confirm it matches what you deleted.
+
 ## 6. After each session
 
 ```
