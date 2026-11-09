@@ -96,12 +96,17 @@ GUIDE_CUSTOMER=<slug> GUIDE_BASE=./ npm run build
 open dist/index.html
 ```
 
-**One file, to send them:**
+**One file, to send them** — this is the default, and where the file belongs:
 
 ```bash
-GUIDE_CUSTOMER=<slug> GUIDE_SINGLE=1 GUIDE_BASE=./ npm run build
-#   → dist/index.html, ~2 MB, everything inlined: JS, CSS and every image as a data URI
+cd ~/code/work/dbt/training/_guides/dbt-interactive-guide
+GUIDE_CUSTOMER=<slug> npm run build:single
+cp dist/index.html ~/code/work/dbt/training/<slug>/<slug>.html
+#   → ~2 MB, everything inlined: JS, CSS and every image as a data URI
 ```
+
+Keep it in the customer folder next to `<slug>.docx`, not in `dist/`. The guide checkout is shared by every
+customer, so `dist/` is scratch space that the next build overwrites.
 
 That single file opens from disk with no server and no network, so it can be emailed or dropped in a shared
 folder. It is a build product, not a source of truth — regenerate it rather than editing it, and do not keep
